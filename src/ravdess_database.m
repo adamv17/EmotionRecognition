@@ -1,5 +1,5 @@
 function[ADS] = ravdess_database()
-folder = "C:\Users\Adam\Documents\Alpha\research project alpha\databases\ravdess-emotional-speech-audio\audio_speech_actors_01-24";
+folder = "C:\Users\Adam\Documents\Alpha\research project alpha\EmotionRecognition\databases\ravdess-emotional-speech-audio\audio_speech_actors_01-24";
 ADS = audioDatastore(folder, 'IncludeSubfolders', true);
 Labels = string(size(ADS.Files));
 for i = 1:length(ADS.Files)
