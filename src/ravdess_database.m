@@ -27,7 +27,7 @@ switch filename(end-16)
     case "7"
         emotion = "disgust";
     case "8"
-        emotion = "surprise-";
+        emotion = "surprise";
 end
 new_filename = emotion;
 end
