@@ -1,7 +1,7 @@
 function [ADS] = berlin_emotional_database()
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
-folder = "C:\Users\Adam\Documents\Alpha\research project alpha\EmotionRecognition\databases\Berlin EmoDB\wav";
+folder = "C:\Users\adamv\OneDrive\Documents\Alpha\research project alpha\EmotionRecognition\databases\Berlin EmoDB\wav";
 ADS = audioDatastore(folder, 'IncludeSubfolders', true);
 Labels = string(size(ADS.Files));
 for i = 1:length(ADS.Files)
