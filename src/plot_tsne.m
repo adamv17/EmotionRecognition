@@ -12,5 +12,8 @@ for i = 1:numel(all_types)
     hold on;
 end
 legend( labels,'Location','northeastoutside');
+strexg = int2str(exaggeration);
+strper = int2str(perplexity);
+title(append("tsne (", strexg, ", ", strper, ")"));
 end
 

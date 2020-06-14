@@ -1,4 +1,4 @@
-function sorted_weights_bar(weight_matrix, feature_idxs, feature_names)
+function sorted_weights_bar(weight_matrix, feature_idxs, feature_names, k)
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
 figure;
@@ -27,5 +27,6 @@ end
 legend(feature_names);
 xlabel("Rank");
 ylabel("Weight");
+title(append("k = ", int2str(k)));
 hold off;
 end
