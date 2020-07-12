@@ -1,4 +1,4 @@
-function [ADS] = berlin_emotional_database()
+function [ADS, Labels] = berlin_emotional_database()
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 folder = "C:\Users\adamv\OneDrive\Documents\Alpha\research project alpha\EmotionRecognition\databases\Berlin EmoDB\wav";
