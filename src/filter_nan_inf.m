@@ -1,6 +1,7 @@
 function [stats] = filter_nan_inf(stats)
-%UNTITLED8 Summary of this function goes here
-%   Detailed explanation goes here
+%filter_nan_inf filters the nan and inf values from stats
+%   For each value in stats checks if it is nan or inf and if so turns it
+%   into the number zero.
 [rows, cols] = size(stats);
 for r = 1:rows-1
     for cc = 1:cols

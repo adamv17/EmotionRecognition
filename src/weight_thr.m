@@ -1,7 +1,10 @@
 function [optimum, names] = weight_thr(stats, weight_matrix, thr, feature_names, stat_names, feature_idxs)
-%UNTITLED % deletes the stat and feature combinations that have a weight less than
-% the threshold value passed
-%   Detailed explanation goes here
+%weight_thr adds the stat and feature combinations that have a weight greater than
+% the threshold value passed (thr)
+%   weight_thr checks for each value in the weight matrix if it is greater
+%   than the threshold value, and appends the corresponding vector from the
+%   stats matrix to the optimum matrix. The names of the optimum stat,
+%   feature combinations are returned in the vector names.
 stat_num = size(weight_matrix, 1);
 count_names = 1;
 for ii = 1:stat_num

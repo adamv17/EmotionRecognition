@@ -1,6 +1,8 @@
 function [weights,idxs] = relieff_weights(stats, labels, k)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+%relieff_weights calculates the output of the relieff function
+%   Runs the relieff function for each row in stats 
+%   where labels are the subsequent classes 
+%   and k is the number of nearest neighbors for which to calculate.   
 rows = size(stats, 1);
 weights = zeros(rows-1, 1);
 idxs = zeros(rows-1, 1);

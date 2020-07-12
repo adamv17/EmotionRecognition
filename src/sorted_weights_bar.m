@@ -1,6 +1,7 @@
 function sorted_weights_bar(weight_matrix, feature_idxs, feature_names, k)
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
+%sorted_weights_bar plots a bar graph of the sorted weights
+%   sorted_weights_bar plots each feature stat combination in descending
+%   order.
 figure;
 num_of_features = size(weight_matrix, 2);
 num_of_stats = size(weight_matrix, 1);

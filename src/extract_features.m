@@ -1,8 +1,18 @@
 function [features, idxs, names] = extract_features(ads, fs, num_files)
 %extract_features calculates the spectral, prosodic and cepstral features
-%of the speech signal. returns a cell matrix for each speech segment with
-%its corresponding features
-%   Detailed explanation goes here
+%of the speech signal and returns a cell matrix for each speech segment with
+%its corresponding features.
+%   The following features and methods are employed in this function:
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
 ms = 30;
 w = round((ms/1000) * fs);
 op = 0.5;
@@ -71,14 +81,12 @@ names{num_names+2,1} = 'zcr';
 names{num_names+3,1} = 'continuousTEO';
 names{num_names+4,1} = 'discreteTEO';
 
-idxs = cell(num_names + 4, 1);
+idxs = cell(size(names, 1), 1);
 for n = 1:num_names
     idxs{n, 1} = eval(['idxs_struct.' names{n, 1}]);
 end
 lastidx = idxs{num_names, 1};
-idxs{num_names+1, 1} = lastidx+1;
-idxs{num_names+2, 1} = lastidx+2;
-idxs{num_names+3, 1} = lastidx+3;
-idxs{num_names+4, 1} = lastidx+4;
+for a = 1:size(names, 1) - num_names
+    idxs{num_names+a, 1} = lastidx+a;
 end
 

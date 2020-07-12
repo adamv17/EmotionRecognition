@@ -1,5 +1,6 @@
 function [ADS, Labels] = berlin_emotional_database()
-%UNTITLED2 Summary of this function goes here
+%berlin_emotional_database accesses the berlin emotional database and
+%returns an audioDatastore of its files and emotion labels.
 %   Detailed explanation goes here
 folder = "C:\Users\adamv\OneDrive\Documents\Alpha\research project alpha\EmotionRecognition\databases\Berlin EmoDB\wav";
 ADS = audioDatastore(folder, 'IncludeSubfolders', true);
@@ -11,6 +12,10 @@ ADS.Labels = Labels;
 end
 
 function [new_filename] = label_file(filename)
+%labe_file returns a new label based on the filename of the berlin
+%emotional database
+%   the letter given by the filename(end-5) points to the corresponding
+%   emotion to return as new_filename.
 switch filename(end-5)
     case "W"
         emotion = "anger";

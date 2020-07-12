@@ -1,6 +1,8 @@
 function sub_weight_bars(weight_matrix, sub, stat_names)
-%UNTITLED6 Summary of this function goes here
-%   Detailed explanation goes here
+%sub_weight_bars plots bar graphs for each stat showing the weight
+%distribution between features
+%   plots for each stat the corresponding weight vector with the name of
+%   the stat and feature legends.
 for snum = 1:size(weight_matrix, 1)
     figure;
     for zoom_f = 1:size(weight_matrix, 2)

@@ -1,6 +1,28 @@
 function [stats, names] = statistics(features, stats2extract, num_of_features)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%statistics calculates the statistics of the feature vector and returns the
+%stats specified in stats2extract, as well as the names of the stats
+%returned.
+%   statstics calculates 18 stats on each feature vector:
+%   Min - the min value 
+%   Max - the max value 
+%   Med - the median value 
+%   Avg - the average value
+%   Std - the standard deviation from the average value
+%   Max/Avg - the max value divided by the average value
+%   Max/Med - the max value divided by the median
+%   (s/avg)^2 - the standard deviation divided by the avg squared
+%   formant(2:5) - the 2nd to 5th largest values in the vector
+%   formant mean - the 1st to 4th largest values
+%   avg>thr - if the average value is greater than a threshold value
+%   >avg - the number of values greater than the average divided by the
+%   total number of values
+%   >0.1avg - the number of values greater than 0.1 of the average divided by the
+%   total number of values
+%   >5*avg - the number of values greater than 5 times the average divided by the
+%   total number of values
+%   >0.4 - the number of values greater than the 0.4 divided by the
+%   total number of values
+
 num_of_stats = size(stats2extract, 2);
 
 stats = zeros(num_of_stats, num_of_features);

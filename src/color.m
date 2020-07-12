@@ -1,6 +1,6 @@
 function [colors] = color(nums)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+%color returns a color for each number in num
+%   For numbers 1-7 returns the colors r, m, g, k, y, c, b
 colors = strings(length(nums),1);
 for c = 1:length(nums)
     switch (nums(c))
