@@ -1,17 +1,16 @@
-function [afe_features, idxs, names] = extract_features(ads, fs)
+function [features, idxs, names] = extract_features(ads, fs, num_files)
 %extract_features calculates the spectral, prosodic and cepstral features
 %of the speech signal. returns a cell matrix for each speech segment with
 %its corresponding features
 %   Detailed explanation goes here
 ms = 30;
 w = round((ms/1000) * fs);
-window = ones(w,1);
 op = 0.5;
 overlap = round(w*op);
 
 afe = audioFeatureExtractor("SampleRate", fs, ...
                             "SpectralDescriptorInput","melSpectrum", ...
-                            "Window", window, ...
+                            "Window", hamming(w, "periodic"), ...
                             "OverlapLength", overlap, ... 
                             "spectralCentroid", true, ...
                             "spectralCrest", true, ...
@@ -26,33 +25,60 @@ afe = audioFeatureExtractor("SampleRate", fs, ...
                            	"spectralSpread", true, ...
                             "mfcc", true, ...
                             "mfccDelta", true, ...
-                            "mfccDeltaDelta", false, ...
+                            "mfccDeltaDelta", true, ...
                             "harmonicRatio", true, ...
                             "pitch",true);
                         
 
-                        
-for f = 1:length(ads.UnderlyingDatastore.Files)
+                      
+for f = 1:num_files
     file = read(ads);
-    afe_features{1,f} = extract(afe,file);
-    [~,c] = size(afe_features{1,f});
-    i = 1;
-    for s = 1:floor(length(file)/overlap)-1
-        afe_features{1,f}(i,c+1) = short_time_energy(file(overlap*(s-1)+1:overlap*(s+1)));
-        afe_features{1,f}(i,c+2) = zcr(file(overlap*(s-1)+1:overlap*(s+1)));
-        i = i + 1;
+    afe_features = extract(afe,file);
+    num_afe = size(afe_features, 2);
+    for afe_feat = 1:num_afe
+        features{afe_feat, f} = afe_features(:, afe_feat); 
     end
+    
+    windows = floor(numel(file)/overlap)-1;
+    st_energy = zeros(1, windows);
+    zcr_vec = zeros(1, windows);
+    prevc = 1;
+    prevd = 1;
+    for s = 1:windows
+        ind = overlap*(s-1)+1:overlap*(s+1);
+        st_energy(1, s) = short_time_energy(file(ind));
+        zcr_vec(1, s) = zcr(file(ind));
+        [cont, disc] = energyop(file(ind), 0);
+        
+        t_cont(prevc:prevc+numel(cont)-1) = cont;
+        t_disc(prevd:prevd+numel(disc)-1) = disc;
+        prevc = prevc+numel(cont);
+        prevd = prevd+numel(cont);
+    end
+    
+    features{num_afe+1, f} = st_energy;
+    features{num_afe+2, f} = zcr_vec;
+    features{num_afe+3, f} = t_cont;
+    features{num_afe+4, f} = t_disc;
 end
 
 
-[idxs, ~] = info(afe);
-names = fieldnames(idxs);
+[idxs_struct, ~] = info(afe);
+names = fieldnames(idxs_struct);
 num_names = size(names,1);
 names{num_names+1,1} = 'shortTimeEnergy';
 names{num_names+2,1} = 'zcr';
-name = names{end-2,1};
-lastidx = eval(['idxs.' name]);
-idxs.shortTimeEnergy = lastidx+1;
-idxs.zcr = lastidx+2;
+names{num_names+3,1} = 'continuousTEO';
+names{num_names+4,1} = 'discreteTEO';
+
+idxs = cell(num_names + 4, 1);
+for n = 1:num_names
+    idxs{n, 1} = eval(['idxs_struct.' names{n, 1}]);
+end
+lastidx = idxs{num_names, 1};
+idxs{num_names+1, 1} = lastidx+1;
+idxs{num_names+2, 1} = lastidx+2;
+idxs{num_names+3, 1} = lastidx+3;
+idxs{num_names+4, 1} = lastidx+4;
 end
 
